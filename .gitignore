@@ -1,0 +1,8 @@
+# Root node_modules (if any)
+node_modules/
+
+# Client node_modules
+/client/node_modules/
+
+# Server node_modules
+/server/node_modules/

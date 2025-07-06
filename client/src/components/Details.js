@@ -55,12 +55,7 @@ const Details = () => {
       <div className="p-6 bg-yellow-100 max-w-xl mx-auto rounded-lg shadow-lg mt-10">
         <div className="text-center">
           <p className="text-red-600 text-xl font-semibold mb-4">{error}</p>
-          <Link
-            to="/"
-            className="inline-block px-6 py-3 bg-red-600 text-yellow-100 rounded-lg font-semibold hover:bg-red-700 transition-colors"
-          >
-            Back to Dashboard
-          </Link>
+          
         </div>
       </div>
     );
@@ -78,19 +73,19 @@ const Details = () => {
     <div className="p-8 bg-yellow-50 max-w-3xl mx-auto rounded-xl shadow-2xl mt-10 border-4 border-red-400">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-extrabold text-red-700 mb-2 tracking-wide">
-          {employee.name || 'Unknown'}
+         {employee.name ? `பெயர்: ${employee.name}` : 'தெரியவில்லை'}
         </h1>
         <p className="text-yellow-700 text-lg font-semibold uppercase tracking-wider">
-          Candidate Details
+          வேட்பாளர் விவரங்கள் ( Candidate Details )
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="space-y-6">
           {[
-            { label: 'Designation', value: employee.designation },
-            { label: 'Constituency', value: employee.constituency },
-            { label: 'District', value: employee.district },
+            { label: 'பதவி ( Designation )', value: employee.designation },
+            { label: 'தொகுதி ( Constituency )', value: employee.constituency },
+            { label: 'மாவட்டம் ( District )', value: employee.district },
             { label: 'Unique ID', value: employee.unique_id, mono: true },
           ].map(({ label, value, mono }) => (
             <div key={label}>

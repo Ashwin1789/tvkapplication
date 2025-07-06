@@ -26,7 +26,7 @@ app.use('/qr_codes', express.static(path.join(__dirname, 'qr_codes')));
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'Office@25',
   database: 'qr_system',
   waitForConnections: true,
   connectionLimit: 10,
@@ -113,7 +113,17 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     // Read Excel file
     const workbook = XLSX.readFile(req.file.path);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = XLSX.utils.sheet_to_json(worksheet);
+    const data = XLSX.utils.sheet_to_json(worksheet, { defval: '', raw: false, header: 1 });
+
+    const headers = data[0].map(h => h.toString().trim().replace(/\s+/g, ' '));
+    const records = data.slice(1).map(row => {
+      const obj = {};
+      headers.forEach((key, i) => {
+        obj[key] = row[i] || '';
+      });
+      return obj;
+    });
+
 
     if (data.length === 0) {
       return res.status(400).json({ error: 'Excel file is empty' });
@@ -130,7 +140,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 
     let processedCount = 0;
 
-    for (const [index, emp] of data.entries()) {
+    for (const [index, emp] of records.entries()) {
       try {
         // Generate unique ID if not provided
         let uniqueId = emp['Unique ID'] || emp['unique_id'] || generateUniqueId();
@@ -160,7 +170,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
             qr_code_url = VALUES(qr_code_url)
         `, [
           uniqueId,
-          emp.Name || emp.name || '',
+          emp['Name'] || emp.name || '',
           emp.Designation || emp.designation || '',
           emp.Constituency || emp.constituency || '',
           emp.District || emp.district || '',
