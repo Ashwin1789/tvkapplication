@@ -10,7 +10,6 @@
             database: 'qr_system',
             port: process.env.PORT || 5000,
             url : process.env.URL || 'http://localhost:3000',
-
         },
         production: {
             db: process.env.db || '',

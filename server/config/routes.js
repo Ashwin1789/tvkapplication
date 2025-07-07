@@ -35,7 +35,7 @@ function sanitizeFilename(str) {
   return str.replace(/[^a-z0-9]/gi, '_').toLowerCase();
 }
 
-app.use('/qr_codes', express.static(path.join(process.cwd(), 'qr_codes')));
+app.use('/qr_codes', express.static(path.join(process.cwd(), 'config/qr_codes')));
 
 // Health check
 app.get('/health', (req, res) => {
