@@ -21,7 +21,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/details/:unique_id" element={<Details />} />
+            <Route path="/tvk/:unique_id" element={<Details />} />
           </Routes>
         </div>
       </Router>
