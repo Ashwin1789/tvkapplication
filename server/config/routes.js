@@ -35,11 +35,14 @@ function sanitizeFilename(str) {
   return str.replace(/[^a-z0-9]/gi, '_').toLowerCase();
 }
 
+app.use('/qr_codes', express.static(path.join(process.cwd(), 'qr_codes')));
 
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
+
+
 
 // Upload Excel file
 app.post('/upload', upload.single('file'), async (req, res) => {

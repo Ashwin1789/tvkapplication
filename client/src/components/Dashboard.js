@@ -4,6 +4,8 @@ import { saveAs } from 'file-saver';
 import { FiUpload, FiDownload, FiDownloadCloud, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { useAuth } from './AuthContext';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Dashboard = () => {
   const { logout } = useAuth();
   const [employees, setEmployees] = useState([]);
@@ -29,7 +31,7 @@ const Dashboard = () => {
   const fetchEmployees = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get('http://localhost:5000/api/employees');
+      const { data } = await axios.get(`${API_URL}/employees`);
       setEmployees(data);
       setError('');
     } catch (error) {
@@ -51,7 +53,7 @@ const Dashboard = () => {
     formData.append('file', file);
 
     try {
-      await axios.post('http://localhost:5000/api/upload', formData, {
+      await axios.post(`${API_URL}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -87,7 +89,7 @@ const Dashboard = () => {
 
   const downloadQRCode = async (qrCodeUrl, uniqueId) => {
     try {
-      const response = await axios.get(`http://localhost:5000${qrCodeUrl}`, {
+      const response = await axios.get(`${API_URL}${qrCodeUrl}`, {
         responseType: 'blob',
       });
       saveAs(response.data, `${uniqueId}.png`);
@@ -107,7 +109,7 @@ const Dashboard = () => {
       setIsLoading(true);
       setError('');
       
-      const response = await axios.get('http://localhost:5000/api/employees/batch-download', {
+      const response = await axios.get(`${API_URL}/employees/batch-download`, {
         params: { ids: selectedEmployees.join(',') },
         responseType: 'blob'
       });
@@ -132,7 +134,7 @@ const Dashboard = () => {
       setError('');
       
       const allIds = employees.map(emp => emp.id);
-      const response = await axios.get('http://localhost:5000/api/employees/batch-download', {
+      const response = await axios.get(`${API_URL}/employees/batch-download`, {
         params: { ids: allIds.join(',') },
         responseType: 'blob'
       });
@@ -173,7 +175,7 @@ const Dashboard = () => {
       setError('');
 
       await axios.put(
-        `http://localhost:5000/api/employees/${editingEmployee.id}`,
+        `${API_URL}/employees/${editingEmployee.id}`,
         editForm
       );
       setShowEditModal(false);
@@ -193,7 +195,7 @@ const Dashboard = () => {
     try {
       setIsLoading(true);
       setError('');
-      await axios.delete(`http://localhost:5000/api/employees/${id}`);
+      await axios.delete(`${API_URL}/employees/${id}`);
       await fetchEmployees();
     } catch (error) {
       console.error('Error deleting employee:', error);
@@ -323,7 +325,7 @@ const Dashboard = () => {
                     <td className="border border-yellow-200 px-4 py-3">
                       {emp.qr_code_url ? (
                         <img
-                          src={`http://localhost:5000${emp.qr_code_url}`}
+                          src={`${API_URL}${emp.qr_code_url}`}
                           alt="QR Code"
                           className="w-16 h-16 object-contain mx-auto"
                           onError={(e) => {

@@ -1,7 +1,6 @@
 
 (function () {
 // Database connection pool
-
     module.exports = {
         development: {
             db: process.env.db || '',

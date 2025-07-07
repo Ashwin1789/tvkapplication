@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const convertGoogleDriveUrl = (url) => {
   const match = url.match(/\/d\/([^/]+)\//);
   if (match && match[1]) {
@@ -22,7 +24,7 @@ const Details = () => {
         setLoading(true);
         setError('');
         const response = await axios.get(
-          `http://localhost:5000/api/employees/unique/${unique_id}`
+          `${API_URL}/employees/unique/${unique_id}`
         );
         setEmployee(response.data);
       } catch (err) {
@@ -111,7 +113,7 @@ const Details = () => {
               </label>
               <div className="bg-red-100 p-6 rounded-lg text-center shadow-inner">
                 <img
-                  src={`http://localhost:5000${employee.qr_code_url}`}
+                  src={`${API_URL}${employee.qr_code_url}`}
                   alt="QR Code"
                   className="w-36 h-36 mx-auto border-4 border-yellow-400 rounded-lg"
                   onError={(e) => {

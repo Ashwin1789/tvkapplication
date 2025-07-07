@@ -19,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 require('./database.js');
 
 // Serve static files
-app.use('/qr_codes', express.static(path.join(process.cwd(), 'qr_codes')));
 app.use('/api', routes);
 // Catch all other routes and return the index file
 app.get('/{*any}', (req, res) => {
