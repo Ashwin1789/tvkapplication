@@ -78,7 +78,7 @@ const Details = () => {
          {employee.name ? `பெயர்: ${employee.name}` : 'தெரியவில்லை'}
         </h1>
         <p className="text-yellow-700 text-lg font-semibold uppercase tracking-wider">
-          வேட்பாளர் விவரங்கள் ( Candidate Details )
+          நிர்வாகியின் விவரம் ( Executive Details )
         </p>
       </div>
 
@@ -88,7 +88,6 @@ const Details = () => {
             { label: 'பதவி ( Designation )', value: employee.designation },
             { label: 'தொகுதி ( Constituency )', value: employee.constituency },
             { label: 'மாவட்டம் ( District )', value: employee.district },
-            { label: 'Unique ID', value: employee.unique_id, mono: true },
           ].map(({ label, value, mono }) => (
             <div key={label}>
               <label className="block text-red-700 font-semibold mb-2 text-lg">
@@ -103,58 +102,6 @@ const Details = () => {
               </p>
             </div>
           ))}
-        </div>
-
-        <div className="space-y-8">
-          {employee.qr_code_url && (
-            <div>
-              <label className="block text-red-700 font-semibold mb-2 text-lg">
-                QR Code
-              </label>
-              <div className="bg-red-100 p-6 rounded-lg text-center shadow-inner">
-                <img
-                  src={`${API_URL}${employee.qr_code_url}`}
-                  alt="QR Code"
-                  className="w-36 h-36 mx-auto border-4 border-yellow-400 rounded-lg"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
-                />
-                <div
-                  className="w-36 h-36 mx-auto bg-yellow-200 flex items-center justify-center text-red-500 text-sm rounded-lg"
-                  style={{ display: 'none' }}
-                >
-                  QR Code not available
-                </div>
-              </div>
-            </div>
-          )}
-
-          {employee.image_url && (
-            <div>
-              <label className="block text-red-700 font-semibold mb-2 text-lg">
-                Photo
-              </label>
-              <div className="bg-red-100 p-6 rounded-lg text-center shadow-inner">
-                <img
-                  src={convertGoogleDriveUrl(employee.image_url)}
-                  alt="Candidate"
-                  className="w-36 h-36 mx-auto object-cover rounded-lg border-4 border-yellow-400"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
-                />
-                <div
-                  className="w-36 h-36 mx-auto bg-yellow-200 flex items-center justify-center text-red-500 text-sm rounded-lg"
-                  style={{ display: 'none' }}
-                >
-                  Photo not available
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

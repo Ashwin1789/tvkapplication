@@ -92,7 +92,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         uniqueId = String(uniqueId).trim();
 
         // Generate QR code
-        const qrData = `http://localhost:3000/tvk/${uniqueId}`;
+        const qrData = `https://a1codes.in/tvk/${uniqueId}`;
         const qrFilename = `qr_${sanitizeFilename(uniqueId)}_${Date.now()}.png`;
         const qrPath = path.join(qrDir, qrFilename);
 
